@@ -7,6 +7,7 @@ import javax.swing.JApplet;
 import org.jgrapht.ext.JGraphXAdapter;
 
 import com.mxgraph.layout.mxCircleLayout;
+import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxStylesheet;
@@ -89,7 +90,6 @@ public class AppletCreationTGraphX extends JApplet{
 		
 		// positioning via jgraphx layouts. lays all th elements in the graps around a circle
         mxCircleLayout layout = new mxCircleLayout(jgxAdapter);
-
         
         // center the circle
         int radius = 300;
@@ -99,6 +99,11 @@ public class AppletCreationTGraphX extends JApplet{
         layout.setMoveCircle(true);
 
         layout.execute(jgxAdapter.getDefaultParent());
+        
+        //Separates edges
+        mxParallelEdgeLayout layout1 = new mxParallelEdgeLayout(jgxAdapter);
+        layout1.execute(jgxAdapter.getDefaultParent());
+        
         // that's all there is to it!...
 
 		
