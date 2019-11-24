@@ -1,3 +1,4 @@
+
 package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
 
 import java.awt.Dimension;
@@ -29,26 +30,40 @@ import java.util.*;
  */
 public class AppletCreationTGraphX extends JApplet{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
+	//Global variable declaration
 	private static final Dimension DEFAULT_SIZE = new Dimension(800, 700);
-
 	String[]cities;
 	int[][] adjacencyMatrix;
 	DirectedWeightedMultigraph<String, Road>  populatedGraph = new DirectedWeightedMultigraph<>(Road.class); 
 
+	/**
+	 * Default constructor, prevents initialization of the object as empty
+	 */
 	public AppletCreationTGraphX() {
-		
+		//default graph to prevent exception
 		cities = new String[] {"null","null"};
 		adjacencyMatrix = new int[2][2];
+		populategraph();
 	}
 
+	/**
+	 * constructor with adjacency matrix
+	 * @param adjacencyMatrixmatrix - matrix of adjacent cities matching with the city name array
+	 * @param cities - array with city names
+	 */
 	public AppletCreationTGraphX(int[][] adjacencyMatrixmatrix, String[] cities) {
 		this.adjacencyMatrix = adjacencyMatrixmatrix;
 		this.cities = cities;
+		//creates graph
+		populategraph();
 	}
 
-
+	/**
+	 * populate the graph using the adjacency matrix passed during construction
+	 * @return
+	 */
 	private boolean populategraph() {
 			
 		for(int i = 0; i < cities.length; i++) {
@@ -68,13 +83,25 @@ public class AppletCreationTGraphX extends JApplet{
 		return true;
 	}
 	
-	//override necessary to create applet
+	
+	/**
+	 * allows changes to the adjacency matrix after object has been initialized 
+	 * @param adjacencyMatrixmatrix - matrix of adjacent cities matching with the city name array
+	 * @param cities - array with city names
+	 */
+	protected void setadjacencyMatrix(int[][] adjacencyMatrixmatrix, String[] cities) {
+		this.adjacencyMatrix = adjacencyMatrixmatrix;
+		this.cities = cities;
+	}
+	
+	
+	/**
+	 * necessary to create applet with JGraphT
+	 */
 	@Override
 	public void init()
 	{
 		// create a JGraphT graph using populategraph()
-		
-		System.out.print(populategraph());
 		System.out.print(populatedGraph);
 
 		// create a visualization using JGraph, via an adapter
@@ -103,9 +130,7 @@ public class AppletCreationTGraphX extends JApplet{
         //Separates edges
         mxParallelEdgeLayout layout1 = new mxParallelEdgeLayout(jgxAdapter);
         layout1.execute(jgxAdapter.getDefaultParent());
-        
-        // that's all there is to it!...
-
+       
 		
 	}
 
