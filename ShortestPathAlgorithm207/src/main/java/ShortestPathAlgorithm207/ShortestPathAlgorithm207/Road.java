@@ -11,10 +11,8 @@ import org.jgrapht.graph.DefaultWeightedEdge;
  */
 public class Road extends DefaultWeightedEdge{
 	
-	
 	@Override
 	public String toString() {
-		
 		return Double.toString(super.getWeight());
 	}
 	

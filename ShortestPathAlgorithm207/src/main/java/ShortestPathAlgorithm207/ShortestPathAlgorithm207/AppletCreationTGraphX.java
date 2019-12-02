@@ -34,10 +34,14 @@ public class AppletCreationTGraphX extends JApplet{
 
 	//Global variable declaration
 	private static final Dimension DEFAULT_SIZE = new Dimension(800, 700);
-	String[]cities;
+	String[] cities;
 	int[][] adjacencyMatrix;
-	DirectedWeightedMultigraph<String, Road>  populatedGraph = new DirectedWeightedMultigraph<>(Road.class); 
+	DirectedWeightedMultigraph<String, Road>  populatedGraph = new DirectedWeightedMultigraph<String, Road>(Road.class); 
 
+	
+	
+	
+	
 	/**
 	 * Default constructor, prevents initialization of the object as empty
 	 */
@@ -48,6 +52,10 @@ public class AppletCreationTGraphX extends JApplet{
 		populategraph();
 	}
 
+	
+	
+	
+	
 	/**
 	 * constructor with adjacency matrix
 	 * @param adjacencyMatrixmatrix - matrix of adjacent cities matching with the city name array
@@ -60,6 +68,10 @@ public class AppletCreationTGraphX extends JApplet{
 		populategraph();
 	}
 
+	
+	
+	
+	
 	/**
 	 * populate the graph using the adjacency matrix passed during construction
 	 * @return
@@ -84,6 +96,9 @@ public class AppletCreationTGraphX extends JApplet{
 	}
 	
 	
+	
+	
+	
 	/**
 	 * allows changes to the adjacency matrix after object has been initialized 
 	 * @param adjacencyMatrixmatrix - matrix of adjacent cities matching with the city name array
@@ -93,6 +108,9 @@ public class AppletCreationTGraphX extends JApplet{
 		this.adjacencyMatrix = adjacencyMatrixmatrix;
 		this.cities = cities;
 	}
+	
+	
+	
 	
 	
 	/**
@@ -106,7 +124,7 @@ public class AppletCreationTGraphX extends JApplet{
 
 		// create a visualization using JGraph, via an adapter
 		JGraphXAdapter<String, Road> jgxAdapter;
-		jgxAdapter = new JGraphXAdapter<>(populatedGraph);
+		jgxAdapter = new JGraphXAdapter<String, Road>(populatedGraph);
 		setPreferredSize(DEFAULT_SIZE);
 		mxGraphComponent component = new mxGraphComponent(jgxAdapter);
 		component.setConnectable(false);
@@ -134,5 +152,8 @@ public class AppletCreationTGraphX extends JApplet{
 		
 	}
 
+	
+	
+	
 }
 
