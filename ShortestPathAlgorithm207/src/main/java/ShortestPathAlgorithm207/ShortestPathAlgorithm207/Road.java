@@ -11,10 +11,10 @@ import org.jgrapht.graph.DefaultWeightedEdge;
  */
 public class Road extends DefaultWeightedEdge{
 	
-	
+	private static final long serialVersionUID = 3L;
+
 	@Override
 	public String toString() {
-		
 		return Double.toString(super.getWeight());
 	}
 	

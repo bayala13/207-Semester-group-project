@@ -2,41 +2,30 @@
 
 package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
 
-
-import com.mxgraph.layout.*;
-import com.mxgraph.swing.*;
-import org.jgrapht.*;
-import org.jgrapht.ext.*;
-import org.jgrapht.graph.*;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+
 
 /**
- * creates a graph based on an adjacency matrix using the JGrapht library
+ * Creates a graph based on an adjacency matrix using the JGrapht library
  * @author Bryan ayala
  *
  */
 public class AppGraphandNearestAlgorithmDriver {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3L;
 
-    //set dimensions for Gui JFrame
+    //Set dimensions for Gui JFrame
     private static final Dimension DEFAULT_SIZE = new Dimension(800, 800);
 
-    
-
     /**
-     * allow running JGraphx applet as an application.
-     *
+     * Allow running JGraphx applet as an application.
      * @param args command line arguments
      */
-    public static void main(String[] args)
-    {
-    	
-    	
-    	// create addjacency matrix
-    	
+    public static void main(String[] args) {
+    
+    	// Creates adjacency matrix
     	String[] cities = {"Rockville", "Silver Spring", "Philadelphia", "Pittsburgh", "Baltimore", "Cleveland", "New York City"};
     	int[][] matrix = {
     			{0,13,142,225,40,352,227},
@@ -47,20 +36,22 @@ public class AppGraphandNearestAlgorithmDriver {
     			{352,364,431,133,375,0,462},
     			{228,222,97,370,118,462,0}
     			};
-
-
     	
-    	
-    	// creates new applet using JGraphx library
-        AppletCreationTGraphX applet = new AppletCreationTGraphX(matrix, cities);
-        applet.init();
+    	// Creates new applets using JGraphx library
+        ParentVizualizationApplet fullGraphApplet = new FullGraph(matrix, cities);
+        fullGraphApplet.init();
         
+        ParentVizualizationApplet nearestNeighborGraphApplet = new NearestNeighborGraph(matrix, cities, "Rockville");
+        nearestNeighborGraphApplet.init();
+        
+        ParentVizualizationApplet teamAlgorithmGraphApplet = new TeamAlgorithmGraph(matrix, cities);
+        teamAlgorithmGraphApplet.init();
 
         /*************************************
-        // Creating UI using swing
+        // Creates UI using swing
          *************************************/
         
-        //Creating the JFrame
+        // Creates the JFrame
          
         JFrame frame = new JFrame("Graph representation");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,23 +59,57 @@ public class AppGraphandNearestAlgorithmDriver {
 
        
         //Creating the panel at bottom and adding components
-        JPanel panel = new JPanel(); // the panel is not visible in output
-        JLabel label = new JLabel("options:");
-        JButton button1 = new JButton("Nearest neighbot algorithm"); //no event listeners yet
-        JButton button2 = new JButton("Group algorithm");
-        panel.add(label); // Components Added using Flow Layout
-        panel.add(label); // Components Added using Flow Layout
+        JPanel panel = new JPanel();
+        final JPanel cards = new JPanel(new CardLayout());
+        
+        JPanel card1 = new JPanel();
+        JPanel card2 = new JPanel();
+        JPanel card3 = new JPanel();
+        final CardLayout cardLayout = (CardLayout) cards.getLayout();
+        
+        card1.add(fullGraphApplet);
+        cards.add(card1, "full Graph");
+        card2.add(nearestNeighborGraphApplet);
+        cards.add(card2, "nearest neighbor");
+        card3.add(teamAlgorithmGraphApplet);
+        cards.add(card3, "Team algorithm");
+        
+        
+        JLabel label = new JLabel("Options: ");
+        
+        JButton button1 = new JButton( new AbstractAction("complete Graph") {// button with even listener
+            @Override
+            public void actionPerformed( ActionEvent e ) {
+            	cardLayout.show(cards, "full Graph");
+            }
+        });
 
+        JButton button2 = new JButton( new AbstractAction("Nearest neighbot algorithm") {// button with even listener
+            @Override
+            public void actionPerformed( ActionEvent e ) {
+            	cardLayout.show(cards, "nearest neighbor");
+            }
+        });
+        
+        JButton button3 = new JButton( new AbstractAction("Team algorithm") {// button with even listener
+            @Override
+            public void actionPerformed( ActionEvent e ) {
+            	cardLayout.show(cards, "Team algorithm");
+            }
+        });
+        
+        
+        panel.add(label); // Components Added using Flow Layout
+        
         panel.add(button1);
         panel.add(button2);
+        panel.add(button3);
 
         //Adding Components to the frame.
+        frame.getContentPane().add(BorderLayout.CENTER, cards);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        frame.getContentPane().add(BorderLayout.CENTER, applet);
         
         //display content of JFrame
         frame.setVisible(true);
-    }
-
-   
+    }  
 }
