@@ -20,19 +20,16 @@ public class AppGraphandNearestAlgorithmDriver {
     //Set dimensions for Gui JFrame
     private static final Dimension DEFAULT_SIZE = new Dimension(800, 800);
 
-    
-    
-    
-    
+
     /**
      * Allow running JGraphx applet as an application.
      * @param args command line arguments
      */
-    
     public static void main(String[] args) {
     
     	// Creates adjacency matrix
     	String[] cities = {"Rockville", "Silver Spring", "Philadelphia", "Pittsburgh", "Baltimore", "Cleveland", "New York City"};
+
     	int[][] distanceMatrix = new int[][]{
 			{0  , 13 , 142, 225, 40 , 352, 227},
 			{13 , 0  , 136, 237, 34 , 363, 222},
@@ -73,7 +70,7 @@ public class AppGraphandNearestAlgorithmDriver {
        
         
         //Creating the panel at bottom and adding components
-        
+
         JPanel panel = new JPanel();
         final JPanel cards = new JPanel(new CardLayout());
         
@@ -83,15 +80,18 @@ public class AppGraphandNearestAlgorithmDriver {
         final CardLayout cardLayout = (CardLayout) cards.getLayout();
         
         card1.add(fullGraphApplet);
+
         cards.add(card1, "Full graph");
         card2.add(nearestNeighborGraphApplet);
         cards.add(card2, "Nearest neighbor");
         card3.add(teamAlgorithmGraphApplet);
         cards.add(card3, "Genetic algorithm");
+
         
         
         JLabel label = new JLabel("Options: ");
         
+
         JButton button1 = new JButton( new AbstractAction("Complete Graph") {// button with even listener
             @Override
             public void actionPerformed( ActionEvent e ) {
@@ -110,6 +110,7 @@ public class AppGraphandNearestAlgorithmDriver {
             @Override
             public void actionPerformed( ActionEvent e ) {
             	cardLayout.show(cards, "Genetic algorithm");
+
             }
         });
         
@@ -126,7 +127,5 @@ public class AppGraphandNearestAlgorithmDriver {
         
         //display content of JFrame
         frame.setVisible(true);
-        
-        
     }  
 }

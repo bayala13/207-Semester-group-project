@@ -11,10 +11,12 @@ import org.jgrapht.graph.DirectedWeightedMultigraph;
  *
  */
 
+
 public class NearestNeighborGraph extends ParentVizualizationApplet{
 
 	
 	
+
 	private static final long serialVersionUID = 3L;
 	private int distanceTraveled = 0;
 	private int originIndex = 0;
@@ -25,11 +27,7 @@ public class NearestNeighborGraph extends ParentVizualizationApplet{
 		populateGraph(origin);
 	}
 	
-	
-	
-	
-	
-	
+
 	/**
 	 * gets the value of the total distance travel after applying algorithm
 	 * @return
@@ -38,11 +36,7 @@ public class NearestNeighborGraph extends ParentVizualizationApplet{
 		return distanceTraveled;
 	}
 	
-	
-	
-	
-	
-	
+
 	/**
 	 * Finds the shortest path starting from one city, passing through every city in the map, and returning
 	 * @param origin - starting city
@@ -51,6 +45,7 @@ public class NearestNeighborGraph extends ParentVizualizationApplet{
 	private boolean populateGraph(String origin) {
 		
 		populatedGraph = new DirectedWeightedMultigraph<>(Road.class);
+
 		int currentCity = 0;
 		int nextCity = 0;
 		ArrayList<Integer> visited = new ArrayList<>();
@@ -60,8 +55,7 @@ public class NearestNeighborGraph extends ParentVizualizationApplet{
 		
 		try {
 			
-			
-			
+
 			//sets graph vertices	
 			for(int i = 0; i < cities.length; i++) {
 				populatedGraph.addVertex(cities[i]); 
@@ -71,16 +65,11 @@ public class NearestNeighborGraph extends ParentVizualizationApplet{
 				}
 			}
 			
-			
-			
-			
-			
-			
-			
+
 			/******************************
 			 * Nearest neighbor algorithm
 			 ******************************/
-			
+
 			//finding shortest path
 			for(int i = 0; i < cities.length; i++) {//loops once per city
 				for(int j = 0; j < adjacencyMatrix[currentCity].length; j++) {//loops once per edge from current city to neighbor cities
@@ -103,14 +92,10 @@ public class NearestNeighborGraph extends ParentVizualizationApplet{
 			newMatrix[currentCity][originIndex] = adjacencyMatrix[currentCity][originIndex];
 			distanceTraveled += adjacencyMatrix[currentCity][originIndex];
 			
-			
+
 			//*******************************
 			
-			
-			
-			
-			
-			
+
 			// populates new graph with only the shortest path edges
 			for(int j = 0; j < adjacencyMatrix.length; j++) {
 				for (int i = 0; i < cities.length; i++) {
@@ -120,21 +105,15 @@ public class NearestNeighborGraph extends ParentVizualizationApplet{
 					}
 				}
 			}
-			
-			
-			
+
 			return true;
-			
-			
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
+
 			e.printStackTrace();
 			return false;
 		}
 		
 	}
-	
-	
-	
-	
-	
+
 }

@@ -1,6 +1,8 @@
 package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
 
+
 import java.util.ArrayList;
+
 
 import org.jgrapht.graph.DirectedWeightedMultigraph;
 
@@ -9,6 +11,7 @@ import org.jgrapht.graph.DirectedWeightedMultigraph;
  * @author Bryan ayala
  *
  */
+
 
 
 
@@ -80,8 +83,6 @@ public class TeamAlgorithmGraph extends ParentVizualizationApplet{
 		return true;
 		
 		
-	}
+	}		
 
-		
-	
 }
