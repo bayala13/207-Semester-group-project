@@ -7,11 +7,9 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest extends TestCase
+public class AppTest 
+    extends TestCase
 {
-	
-	
-	
     /**
      * Create the test case
      *
@@ -22,8 +20,6 @@ public class AppTest extends TestCase
         super( testName );
     }
 
-    
-    
     /**
      * @return the suite of tests being tested
      */
@@ -32,8 +28,6 @@ public class AppTest extends TestCase
         return new TestSuite( AppTest.class );
     }
 
-    
-    
     /**
      * Rigourous Test :-)
      */
@@ -41,6 +35,4 @@ public class AppTest extends TestCase
     {
         assertTrue( true );
     }
-    
-    
 }

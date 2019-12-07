@@ -2,128 +2,131 @@
 
 package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
 
-
-import com.mxgraph.layout.*;
-import com.mxgraph.swing.*;
-
-
-
-import org.jgrapht.*;
-import org.jgrapht.ext.*;
-import org.jgrapht.graph.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
+//TODO Add distance to cards
 /**
- * creates a graph based on an adjacency matrix using the JGrapht library
+ * Creates a graph based on an adjacency matrix using the JGrapht library
  * @author Bryan ayala
  *
  */
-public class AppGraphandNearestAlgorithmDriver implements ActionListener {
 
-    private static final long serialVersionUID = 1L;
+public class AppGraphandNearestAlgorithmDriver {
+
+    private static final long serialVersionUID = 3L;
+    //Set dimensions for Gui JFrame
     private static final Dimension DEFAULT_SIZE = new Dimension(800, 800);
-    static int[][] adjacencyMatrix;
-    static String[] cities;
-    MinCircuitFinder solver;
-    
-    
-    AppGraphandNearestAlgorithmDriver(){
-    	
-    	cities = new String[] {"Rockville", "Silver Spring", "Philadelphia", "Pittsburgh", "Baltimore", "Cleveland", "New York City"};
-    	adjacencyMatrix = new int[][]{
-			    			{0  , 13 , 142, 225, 40 , 352, 227},
-			    			{13 , 0  , 136, 237, 34 , 363, 222},
-			    			{141, 135, 0  , 305, 101, 432, 97 },
-			    			{226, 237, 304, 0  , 248, 133, 371},
-			    			{40 , 34 , 106, 248, 0  , 374, 192},
-			    			{352, 364, 431, 133, 375, 0  , 462},
-			    			{228, 222, 97 , 370, 118, 462, 0  }
-    					};
-    					
-    	solver = new MinCircuitFinder(cities, adjacencyMatrix);
-    	
-    }
-    
+
     
     
     
     
     /**
-     * allow running JGraphx applet as an application.
-     *
+     * Allow running JGraphx applet as an application.
      * @param args command line arguments
      */
-    public static void main(String[] args)
-    {
+    
+    public static void main(String[] args) {
+    
+    	// Creates adjacency matrix
+    	String[] cities = {"Rockville", "Silver Spring", "Philadelphia", "Pittsburgh", "Baltimore", "Cleveland", "New York City"};
+    	int[][] distanceMatrix = new int[][]{
+			{0  , 13 , 142, 225, 40 , 352, 227},
+			{13 , 0  , 136, 237, 34 , 363, 222},
+			{141, 135, 0  , 305, 101, 432, 97 },
+			{226, 237, 304, 0  , 248, 133, 371},
+			{40 , 34 , 106, 248, 0  , 374, 192},
+			{352, 364, 431, 133, 375, 0  , 462},
+			{228, 222, 97 , 370, 118, 462, 0  }
+		};
     	
-    	
-    	// Applet initialization ________________________________________________
-    	
+		
+		
+		
+    	// Creates new applets using JGraphx library
+		
+        ParentVizualizationApplet fullGraphApplet = new FullGraph(distanceMatrix, cities);
+        fullGraphApplet.init();
+        
+        ParentVizualizationApplet nearestNeighborGraphApplet = new NearestNeighborGraph(distanceMatrix, cities, "Rockville");
+        nearestNeighborGraphApplet.init();
+        
+        ParentVizualizationApplet teamAlgorithmGraphApplet = new TeamAlgorithmGraph(distanceMatrix, cities, "Rockville", 10, 15, 0.5);
+        teamAlgorithmGraphApplet.init();
 
-    	
-        AppletCreationTGraphX applet = new AppletCreationTGraphX(adjacencyMatrix, cities);
-        applet.init();
-        
-        
-        // ________________________________________________________________________
         
         
         
+        /*************************************
+        // Creates UI using swing
+         *************************************/
         
-
-        // Creating UI using swing ---------------------------------------------------------------
-        
-        //JFrame
+        // Creates the JFrame
+         
         JFrame frame = new JFrame("Graph representation");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(DEFAULT_SIZE);
 
        
-        //Creating the panel at bottom and adding components
-        JPanel panel = new JPanel(); // the panel is not visible in output
-        JLabel label = new JLabel("Algorithm options:");
-        JButton button1 = new JButton("Nearest neighbor algorithm"); //no event listeners yet
-        button1.setActionCommand("nearest_neighbor");
-        JButton button2 = new JButton("Group algorithm");
-        button1.setActionCommand("group_algorithm");
         
-        //Components added to panel using flow layout
-        panel.add(label); 
+        //Creating the panel at bottom and adding components
+        
+        JPanel panel = new JPanel();
+        final JPanel cards = new JPanel(new CardLayout());
+        
+        JPanel card1 = new JPanel();
+        JPanel card2 = new JPanel();
+        JPanel card3 = new JPanel();
+        final CardLayout cardLayout = (CardLayout) cards.getLayout();
+        
+        card1.add(fullGraphApplet);
+        cards.add(card1, "Full graph");
+        card2.add(nearestNeighborGraphApplet);
+        cards.add(card2, "Nearest neighbor");
+        card3.add(teamAlgorithmGraphApplet);
+        cards.add(card3, "Genetic algorithm");
+        
+        
+        JLabel label = new JLabel("Options: ");
+        
+        JButton button1 = new JButton( new AbstractAction("Complete Graph") {// button with even listener
+            @Override
+            public void actionPerformed( ActionEvent e ) {
+            	cardLayout.show(cards, "Full graph");
+            }
+        });
+
+        JButton button2 = new JButton( new AbstractAction("Nearest neighbor algorithm") {// button with even listener
+            @Override
+            public void actionPerformed( ActionEvent e ) {
+            	cardLayout.show(cards, "Nearest neighbor");
+            }
+        });
+        
+        JButton button3 = new JButton( new AbstractAction("Genetic algorithm") {// button with even listener
+            @Override
+            public void actionPerformed( ActionEvent e ) {
+            	cardLayout.show(cards, "Genetic algorithm");
+            }
+        });
+        
+        
+        panel.add(label); // Components Added using Flow Layout
+        
         panel.add(button1);
         panel.add(button2);
+        panel.add(button3);
 
-        //Adding Components to JFrame
+        //Adding Components to the frame.
+        frame.getContentPane().add(BorderLayout.CENTER, cards);
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
-        frame.getContentPane().add(BorderLayout.CENTER, applet);
         
         //display content of JFrame
         frame.setVisible(true);
         
-        // ---------------------------------------------------------------------------------------
         
-    }
-    
-    
-
-
-
-
-	public void actionPerformed(ActionEvent ae) {
-		
-        String action = ae.getActionCommand();
-        
-        if (action.equals("nearest_neighbor")) {
-            solver.nearestNeighbor();
-        } else if(action.equals("group_algorithm")) {
-        	solver.groupAlgorithm();
-        }
-        
-		
-	}
-
-   
+    }  
 }
