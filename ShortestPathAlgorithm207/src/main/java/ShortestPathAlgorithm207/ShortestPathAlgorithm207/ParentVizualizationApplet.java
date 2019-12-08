@@ -2,6 +2,7 @@
 package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JApplet;
 
@@ -20,21 +21,26 @@ import org.jgrapht.graph.*;
  *
  */
 public class ParentVizualizationApplet extends JApplet{
-
+	
 	private static final long serialVersionUID = 3L;
 
+	
 	//Global variable declaration
-	private static final Dimension DEFAULT_SIZE = new Dimension(800, 700);
+	private static final Dimension DEFAULT_SIZE = new Dimension(800, 650);
 	protected String[]cities;
 	protected int[][] adjacencyMatrix;
+	int distanceTraveled = 0;
 	protected DirectedWeightedMultigraph<String, Road>  populatedGraph; 
-
+	protected ArrayList<String> path = new ArrayList<String>();
+	
+	
 	/**
-	 * Default constructor, not meant to be used. set to private to prevent compiling if used.
+	 * Default constructor, not allowed. set to private to prevent compiling if used.
 	 */
 	private ParentVizualizationApplet() {
 		
 	}
+	
 
 	/**
 	 * Constructor with adjacency matrix
@@ -46,17 +52,47 @@ public class ParentVizualizationApplet extends JApplet{
 		this.cities = cities;
 	}
 	
+	
 	/**
 	 * Allows changes to the adjacency matrix after object has been initialized 
 	 * @param adjacencyMatrixmatrix - matrix of adjacent cities matching with the city name array
 	 * @param cities - array with city names
 	 */
-	protected void setadjacencyMatrix(int[][] adjacencyMatrixmatrix, String[] cities) {
+	public void setadjacencyMatrix(int[][] adjacencyMatrixmatrix, String[] cities) {
 		this.adjacencyMatrix = adjacencyMatrixmatrix;
 		this.cities = cities;
 	}
 	
 	
+	/**
+	 * Gets the value of the total distance travel after applying algorithm
+	 * @return the distance traveled by the algorithm
+	 */
+	public int getDistanceTraveled() {
+		return distanceTraveled;
+	}
+
+	
+	/**
+	 * Returns number of cities traveled
+	 * @return
+	 */
+	public int getNumberOfCities() {
+		return cities.length;
+	}
+	
+	
+	/**
+	 * Gets an array with the list of cities visited 
+	 * @return
+	 */
+	public ArrayList<String> getPath(){
+		return path;
+	}
+	
+	public void setPath(ArrayList<String> path) {
+		this.path = path;
+	}
 	/**
 	 * Necessary to create applet with JGraphT. Styling must be applied here. 
 	 */
@@ -66,21 +102,20 @@ public class ParentVizualizationApplet extends JApplet{
 		// Create a visualization using JGraph, via an adapter
 		JGraphXAdapter<String, Road> jgxAdapter;
 		jgxAdapter = new JGraphXAdapter<>(populatedGraph);
-		setPreferredSize(DEFAULT_SIZE);
 		mxGraphComponent component = new mxGraphComponent(jgxAdapter);
 		component.setConnectable(false);
 		component.getGraph().setAllowDanglingEdges(false);
 		getContentPane().add(component);
-		resize(DEFAULT_SIZE);
 		
+		resize(DEFAULT_SIZE);
 		
 		// Positioning via jgraphx layouts. lays all the elements in the graphs around a circle
 		mxCircleLayout layout = new mxCircleLayout(jgxAdapter);
 		
 		// Center the circle
-		int radius = 300;
-		layout.setX0((DEFAULT_SIZE.width / 2.0) - radius);
-		layout.setY0((DEFAULT_SIZE.height / 2.0) - radius);
+		int radius = DEFAULT_SIZE.height/ 2;
+		layout.setX0(1);
+		layout.setY0(1);
 		layout.setRadius(radius);
 		layout.setMoveCircle(true);
 		
