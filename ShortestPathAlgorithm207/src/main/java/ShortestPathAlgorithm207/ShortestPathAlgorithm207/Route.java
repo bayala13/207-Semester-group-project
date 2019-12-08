@@ -7,8 +7,6 @@ import java.util.Arrays;
 
 public class Route implements Comparable<Route>{
 	
-	
-	
 	final static int SIZE = 8; // Number of cities + 1, rockville comes twice
 	final static double mutationChance = 0.15;
 	final static ArrayList<String> cities = new ArrayList<String>(Arrays.asList("Rockville", "Silver Spring", "Philadelphia", "Pittsburgh", "Baltimore", "Cleveland", "New York City"));
@@ -39,17 +37,10 @@ public class Route implements Comparable<Route>{
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Create a randomized route.
 	 * @return randomized individual
 	 */
-	
 	public static Route createRandomIndividual() {
 		
 		Route temp = new Route();
@@ -79,36 +70,24 @@ public class Route implements Comparable<Route>{
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * 
 	 * @param source source town
 	 * @param destination destination town
 	 * @return the weight of the edge connecting source to destination
 	 */
-	
+
 	int getWeightOf(String source, String destination) {
 		try{
 			return distanceMatrix[cities.indexOf(source)][cities.indexOf(destination)];
 		} catch (ArrayIndexOutOfBoundsException e ) { return 1000; }
 	}
-	
-	
-	
-	
-	
-	
+		
 	
 	/**
 	 * Get an array of the weights of the composition
 	 * @return weights of each edge in an array
-	 */
-	
+	 */	
 	int[] getWeights() {
 		
 		int[] weights = new int[SIZE-1];
@@ -130,16 +109,10 @@ public class Route implements Comparable<Route>{
 	}
 	
 	
-
-	
-	
-	
-	
 	/**
 	 * Get the overall fitnes of a chromosome
 	 * @return sum of the weights of the composition
 	 */
-	
 	public int getFitness() {
 		
 		int sum = 0;
@@ -153,32 +126,21 @@ public class Route implements Comparable<Route>{
 	}
 	
 	
-	
-	
-	
-	
 	/**
 	 * Crossover/breed two routes
 	 * @return the child of the two routes
 	 */
-	
 	public Route crossover(Route o) {
 		
 		int transmutationLength = getRandom(1, SIZE-2);
 		int startPoint = getRandom(1, SIZE - transmutationLength - 1);
 		Route child = new Route();
-		
 
-
-		
-		
 		
 		for(int i = 0; i < transmutationLength; i++) {
 			child.composition[startPoint + i] = o.composition[startPoint + i];
 		}
-		
-		
-		
+			
 		
 		for(int i = 1; i < SIZE-1; i++) {
 			
@@ -201,16 +163,11 @@ public class Route implements Comparable<Route>{
 		return child;
 		
 	}
-	
-	
-	
-	
-	
+		
 	
 	/**
 	 * Mutate the genes of the route. 
-	 */
-	
+	 */	
 	public void mutate(){
 		
 		
@@ -224,12 +181,6 @@ public class Route implements Comparable<Route>{
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	/**
@@ -249,20 +200,12 @@ public class Route implements Comparable<Route>{
 		}
 		
 		return path;
-		
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	/*
 	 * Utility methods
 	 */
-	
 	boolean equals(Route o){
 		for(int i = 0; i < SIZE; i++) {
 			if(!this.composition[i].equals(o.composition[i])) {
@@ -271,8 +214,7 @@ public class Route implements Comparable<Route>{
 		}
 		return true;
 	}
-	
-	
+		
 	
 	static int getRandom(int min, int max) {
 		return (int) ((Math.random() * ((max - min) + 1)) + min);
