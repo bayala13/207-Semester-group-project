@@ -1,11 +1,7 @@
 
-
 package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
 
 import javax.swing.*;
-
-import com.mxgraph.swing.util.mxGraphActions.UpdateGroupBoundsAction;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
@@ -24,7 +20,7 @@ public class AppShortestPathDriver {
     private static final long serialVersionUID = 3L;
     
     //Set dimensions for top level jFrame
-    private static final Dimension DEFAULT_SIZE = new Dimension(800, 1020);
+    private static final Dimension DEFAULT_SIZE = new Dimension(1200, 800);
 
 
     /**
@@ -59,6 +55,7 @@ public class AppShortestPathDriver {
         final JFrame frame = new JFrame("Nearest Neighbor algorithm representation");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(DEFAULT_SIZE);
+        frame.setPreferredSize(DEFAULT_SIZE);
         
 
         //Draws Left Text area ands adds them to a box with a label
@@ -86,7 +83,8 @@ public class AppShortestPathDriver {
         
         
         //Adds both labeled text areas to app
-        final JPanel textBoxes = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        final JPanel textBoxes = new JPanel();
+        textBoxes.setLayout(new BoxLayout(textBoxes, BoxLayout.Y_AXIS));
         textBoxes.add(leftTextBox);
         textBoxes.add(rightTextBox);        
         
@@ -95,7 +93,8 @@ public class AppShortestPathDriver {
         final JSlider generationsSlider = new JSlider(new DefaultBoundedRangeModel(10, 0, 0, 20));//<< changes generation ranges
         JLabel generationsLabel = new JLabel("Generations: ");
         generationsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        final Box generationsBox = Box.createVerticalBox();
+        final JPanel generationsBox = new JPanel();
+        generationsBox.setLayout(new BoxLayout(generationsBox, BoxLayout.Y_AXIS));
         generationsBox.add(generationsLabel);
         generationsBox.add(generationsSlider);
         
@@ -109,7 +108,8 @@ public class AppShortestPathDriver {
         final JSlider populationSizeSlider = new JSlider(new DefaultBoundedRangeModel(15, 0, 0, 30));//<< changes population ranges
         JLabel populationLabel = new JLabel("Population size:  ");
         populationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        final Box populationBox = Box.createVerticalBox();
+        final JPanel populationBox = new JPanel();
+        populationBox.setLayout(new BoxLayout(populationBox, BoxLayout.Y_AXIS));
         populationBox.add(populationLabel);
         populationBox.add(populationSizeSlider);
         
@@ -117,13 +117,14 @@ public class AppShortestPathDriver {
         populationSizeSlider.setPaintTicks(true);
         populationSizeSlider.setPaintLabels(true);
         populationSizeSlider.setSnapToTicks(true);
-        
+       
         
         //Mutation slider
         final JSlider mutationrateSlider = new JSlider(new DefaultBoundedRangeModel(5, 0, 1, 10)); //<< changes mutation rate ranges
         JLabel mutationrateLabel = new JLabel("Mutation Rate: ");
         mutationrateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        final Box mutationrateBox = Box.createVerticalBox();
+        final JPanel mutationrateBox = new JPanel();
+        mutationrateBox.setLayout(new BoxLayout(mutationrateBox, BoxLayout.Y_AXIS));
         mutationrateBox.add(mutationrateLabel);
         mutationrateBox.add(mutationrateSlider);
         
@@ -132,6 +133,11 @@ public class AppShortestPathDriver {
         mutationrateSlider.setPaintLabels(true);
         mutationrateSlider.setSnapToTicks(true);
         
+        //adding all sliders to a single horizontal box
+        final JPanel slidersBox = new JPanel();
+        slidersBox.add(generationsBox);
+        slidersBox.add(populationBox);
+        slidersBox.add(mutationrateBox);
         
         //Card layout to switch between graphs
         final JPanel cards = new JPanel(new CardLayout());
@@ -158,10 +164,13 @@ public class AppShortestPathDriver {
             @Override
             public void actionPerformed( ActionEvent e ) {
             	card2.removeAll();
+            	JPanel wrapper = new JPanel(new BorderLayout());
             	ParentVizualizationApplet nearestNeighborGraphApplet = new NearestNeighborGraph(distanceMatrix, cities, "Rockville");
             	nearestNeighborGraphApplet.init();
-            	card2.add(nearestNeighborGraphApplet);
-            	card2.add(textBoxes);
+            	
+            	wrapper.add(BorderLayout.EAST, textBoxes);
+                wrapper.add(BorderLayout.WEST, nearestNeighborGraphApplet);
+            	card2.add(wrapper);
                 cards.add(card2, "Nearest neighbor");
                 leftTextArea.setText(updateTextAreas(nearestNeighborGraphApplet));
             	cardLayout.show(cards, "Nearest neighbor");
@@ -174,6 +183,10 @@ public class AppShortestPathDriver {
             public void actionPerformed( ActionEvent e ) {
             	card3.removeAll(); // clears card 
             
+            	JPanel wrapper = new JPanel(new BorderLayout());
+            	
+            	
+            		
             	int generations = generationsSlider.getValue();
             	int populationSize = populationSizeSlider.getValue();
             	double mutation = mutationrateSlider.getValue()/10.0;
@@ -183,15 +196,13 @@ public class AppShortestPathDriver {
                 teamAlgorithmGraphApplet.init();
                 
                 
-                card3.add(teamAlgorithmGraphApplet);
-                card3.add(generationsBox);
-            	card3.add(populationBox);
-            	card3.add(mutationrateBox);
-            	card3.add(textBoxes);
+                
+            	wrapper.add(BorderLayout.SOUTH, slidersBox);
+            	wrapper.add(BorderLayout.CENTER, textBoxes);
+                wrapper.add(BorderLayout.WEST, teamAlgorithmGraphApplet);
+                card3.add(wrapper);
             	rightTextArea.setText(updateTextAreas(teamAlgorithmGraphApplet));
                 cards.add(card3, "Genetic algorithm");
-                
-
 
             	cardLayout.show(cards, "Genetic algorithm");
             	
