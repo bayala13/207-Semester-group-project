@@ -20,7 +20,7 @@ public class AppShortestPathDriver {
     private static final long serialVersionUID = 3L;
     
     //Set dimensions for top level jFrame
-    private static final Dimension DEFAULT_SIZE = new Dimension(1200, 830);
+    private static final Dimension DEFAULT_SIZE = new Dimension(1200, 855);
 
 
     /**
@@ -139,6 +139,11 @@ public class AppShortestPathDriver {
         slidersBox.add(populationBox);
         slidersBox.add(mutationrateBox);
         
+        
+        //adding drop down to change origin city
+        final JComboBox<String> comboBox = new JComboBox<String>(cities);
+        
+        
         //Card layout to switch between graphs
         final JPanel cards = new JPanel(new CardLayout());
         final CardLayout cardLayout = (CardLayout) cards.getLayout();
@@ -165,7 +170,7 @@ public class AppShortestPathDriver {
             public void actionPerformed( ActionEvent e ) {
             	card2.removeAll();
             	JPanel wrapper = new JPanel(new BorderLayout());
-            	ParentVizualizationApplet nearestNeighborGraphApplet = new NearestNeighborGraph(distanceMatrix, cities, "Rockville");
+            	ParentVizualizationApplet nearestNeighborGraphApplet = new NearestNeighborGraph(distanceMatrix, cities, cities[comboBox.getSelectedIndex()]);
             	nearestNeighborGraphApplet.init();
             	
             	wrapper.add(BorderLayout.EAST, textBoxes);
@@ -174,6 +179,7 @@ public class AppShortestPathDriver {
                 cards.add(card2, "Nearest neighbor");
                 leftTextArea.setText(updateTextAreas(nearestNeighborGraphApplet));
             	cardLayout.show(cards, "Nearest neighbor");
+            	frame.revalidate();
             }
         });
         
@@ -184,15 +190,13 @@ public class AppShortestPathDriver {
             	card3.removeAll(); // clears card 
             
             	JPanel wrapper = new JPanel(new BorderLayout());
-            	
-            	
             		
             	int generations = generationsSlider.getValue();
             	int populationSize = populationSizeSlider.getValue();
             	double mutation = mutationrateSlider.getValue()/10.0;
 
             	ParentVizualizationApplet teamAlgorithmGraphApplet = new TeamAlgorithmGraph(
-            			distanceMatrix, cities, "Rockville", generations, populationSize, mutation);
+            			distanceMatrix, cities, cities[comboBox.getSelectedIndex()], generations, populationSize, mutation);
                 teamAlgorithmGraphApplet.init();
                 
                 
@@ -205,6 +209,7 @@ public class AppShortestPathDriver {
                 cards.add(card3, "Genetic algorithm");
 
             	cardLayout.show(cards, "Genetic algorithm");
+            	frame.revalidate();
             	
             }
         });
@@ -218,7 +223,13 @@ public class AppShortestPathDriver {
         buttonsPanel.add(button2);
         buttonsPanel.add(button3);
 
+        
+        JPanel wrapper = new JPanel();
+        JLabel conboBoxLabel = new JLabel("select origin city ");
+        wrapper.add(conboBoxLabel);
+        wrapper.add(comboBox);
         //Adding Components to the frame.
+        frame.getContentPane().add(BorderLayout.NORTH, wrapper);
         frame.getContentPane().add(BorderLayout.CENTER, cards);
         frame.getContentPane().add(BorderLayout.SOUTH, buttonsPanel);
         
