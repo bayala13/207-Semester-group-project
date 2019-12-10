@@ -1,4 +1,13 @@
-
+/**
+ * 
+ * This program makes use of the JgraphT graphing library. 
+ * 
+ * JGraphT may be used under the terms of the
+ * Eclipse Public License (EPL):
+ * http://www.eclipse.org/org/documents/epl-v10.php
+ *  
+ *  as such the same license extends to this programs and related classes in this package
+ */
 package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
