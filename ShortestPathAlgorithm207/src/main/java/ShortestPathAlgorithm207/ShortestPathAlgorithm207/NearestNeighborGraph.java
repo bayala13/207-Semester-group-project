@@ -62,7 +62,7 @@ public class NearestNeighborGraph extends ParentVizualizationApplet{
 		
 		ArrayList<Integer> visited = new ArrayList<>();
 		int[][] algorithmMatrix = new int[super.adjacencyMatrix.length][super.adjacencyMatrix[0].length];
-		int currentCity = 0;
+		int currentCity = originIndex;
 		int nextCity = 0;
 		int shortestRoad = -1;
 
