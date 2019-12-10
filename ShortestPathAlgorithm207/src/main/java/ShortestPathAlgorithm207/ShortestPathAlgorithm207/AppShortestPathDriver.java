@@ -30,7 +30,7 @@ public class AppShortestPathDriver {
     private static final long serialVersionUID = 3L;
     
     //Set dimensions for top level jFrame
-    private static final Dimension DEFAULT_SIZE = new Dimension(1200, 800);
+    private static final Dimension DEFAULT_SIZE = new Dimension(1200, 830);
 
 
     /**
