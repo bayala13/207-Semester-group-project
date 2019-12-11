@@ -12,7 +12,7 @@ package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
 
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
 
 import org.jgrapht.graph.DirectedWeightedMultigraph;
 
@@ -41,7 +41,8 @@ public class TeamAlgorithmGraph extends ParentVizualizationApplet{
 	private boolean populateGraph(String origin, int generations, int populationSize, double mutationChance) {
 		
 		super.populatedGraph = new DirectedWeightedMultigraph<>(Road.class);
-		GeneticAlgorithmManager manager = new GeneticAlgorithmManager(populationSize, mutationChance, origin);  
+		ArrayList<String> temp = new ArrayList<String>(Arrays.asList(cities));
+		GeneticAlgorithmManager manager = new GeneticAlgorithmManager(populationSize, mutationChance, origin, adjacencyMatrix, cities.length, temp, origin);
 		
 		int[][] algorithmMatrix = new int[adjacencyMatrix.length][adjacencyMatrix[0].length];
 		
