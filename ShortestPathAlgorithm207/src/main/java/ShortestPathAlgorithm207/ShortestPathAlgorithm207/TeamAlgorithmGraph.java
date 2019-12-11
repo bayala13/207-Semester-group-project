@@ -8,8 +8,8 @@ import org.jgrapht.graph.DirectedWeightedMultigraph;
 
 /**
  * Populate graph using algorithm created by team members
- * @author Eugene
- *
+ * @author Eugene Domrachev
+ * @author Bryan Ayala
  */
 public class TeamAlgorithmGraph extends ParentVizualizationApplet{
 	
@@ -31,7 +31,7 @@ public class TeamAlgorithmGraph extends ParentVizualizationApplet{
 	private boolean populateGraph(String origin, int generations, int populationSize, double mutationChance) {
 		
 		super.populatedGraph = new DirectedWeightedMultigraph<>(Road.class);
-		GeneticAlgorithmManager manager = new GeneticAlgorithmManager(populationSize, mutationChance);  
+		GeneticAlgorithmManager manager = new GeneticAlgorithmManager(populationSize, mutationChance, origin);  
 		
 		int[][] algorithmMatrix = new int[adjacencyMatrix.length][adjacencyMatrix[0].length];
 		

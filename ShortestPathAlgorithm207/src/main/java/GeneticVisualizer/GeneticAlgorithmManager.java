@@ -1,30 +1,23 @@
-package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
+package GeneticVisualizer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * Manager for the genetic TSP algorithm.
- * @author Eugene Domrachev
- */
-
+//TODO make generic
 public class GeneticAlgorithmManager {
+	
 	
 	
 	final int populationSize;
 	final double mutationRate;
-	final static int selectionSize = 5; //1/x for elite/mid size
-	static ArrayList<Route> population;
+	final static int selectionSize = 5;// 1/x
+	 ArrayList<Route> population;
 	int generation;
 	Route mostFit;
 	
 	
-	/**
-	 * Constructor
-	 * @param populationSize - size of the population 
-	 * @param mutationRate - rate at witch mutations happen
-	 */
-	GeneticAlgorithmManager(int populationSize, double mutationRate, String startVertex){
+	
+	GeneticAlgorithmManager(int populationSize, double mutationRate){
 		
 		generation = 0;
 		this.mutationRate = mutationRate;
@@ -32,49 +25,62 @@ public class GeneticAlgorithmManager {
 		population = new ArrayList<Route>();
 		
 		for(int i = 0; i < populationSize; i++) {
-			population.add(Route.createRandomIndividual(startVertex));
+			population.add(Route.createRandomIndividual());
 		}
 		
 	}
 	
 	
-	/**
-	 * Testing Constructor
-	 * @param populationSize - size of the population 
-	 * @param mutationRate - rate at witch mutations happen
-	 */
-	GeneticAlgorithmManager(int populationSize, double mutationRate, String startVertex, int[][] distances, int size, ArrayList<String> vertices, String startPoint){
-		
-		generation = 0;
-		this.mutationRate = mutationRate;
-		this.populationSize = populationSize;
-		population = new ArrayList<Route>();
-		
-		Route r = new Route(distances, vertices, startPoint);
-		
-		for(int i = 0; i < populationSize; i++) {
-			population.add(Route.createRandomIndividual(startPoint));
-		}
-		
-	}
+	
+	
+	
 	
 	/**
 	 * Get the most fit individual of the population.
 	 * @return most fit individual
 	 */
+	
 	int getGeneration() {
 		return generation;
 	}
 	
 	
+	
+	
+	
+	
+	
 	/**
 	 * Get the most fit individual of the population.
 	 * @return most fit individual
 	 */
+	
 	Route getMostFit() {
 		return population.get(0);
 	}
-		
+	
+	
+	
+	
+	
+	
+	/**
+	 * Get the most fit individual of the population.
+	 * @return most fit individual
+	 */
+	
+	double getAverageFitness() {
+		double sum = 0;
+		for(Route r : population) {
+			sum += r.getFitness();
+		}
+		return sum / population.size();
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * Get the most fit individual from the passed list. In this implementation (TSP), we are looking to reduce distance
@@ -82,6 +88,7 @@ public class GeneticAlgorithmManager {
 	 * @param list population to draw from
 	 * @return most fit individual
 	 */
+	
 	Route getMostFitIndividualOf(ArrayList<Route> list){
 		
 		Route temp = list.get(0);
@@ -97,13 +104,22 @@ public class GeneticAlgorithmManager {
 		return temp;
 		
 	}
-		
+	
+	
+	
+	
+	
+
+
+	
 	
 	/**
 	 * Simulate the crossover/breeding process of the current generation held in population.
 	 */
+	
 	void crossPopulation(){
-			
+		
+		
 		ArrayList<Route> newPopulation = new ArrayList<Route>();
 		ArrayList<Route> elites = getElites();
 		ArrayList<Route> mids = getMids();
@@ -111,6 +127,7 @@ public class GeneticAlgorithmManager {
 		int newSize = 0;
 		double random;
 		int randIndex;
+		
 		
 		
 		while(newSize < populationSize) {
@@ -129,17 +146,26 @@ public class GeneticAlgorithmManager {
 			newSize++;
 		}
 		
-				
+		
+		//System.out.println("\nOld population: " + population);
+		
 		population = newPopulation;
 		
+		//System.out.println("\nNew population: " + population);
+
 		
 	}
+	
+	
+	
+	
 	
 	
 	
 	/**
 	 * Iterate through the population and decide whether or not to mutate them.
 	 */
+	
 	void mutatePopulation() {
 		for(Route r : population) {
 			if(Math.random() < mutationRate) {
@@ -149,9 +175,15 @@ public class GeneticAlgorithmManager {
 	}
 	
 	
+	
+	
+	
+	
+	
 	/**
 	 * Step through a generation of crossing and mutating.
-	 */	
+	 */
+	
 	void iterateGeneration() {
 		
 		crossPopulation();
@@ -162,10 +194,16 @@ public class GeneticAlgorithmManager {
 	}
 	
 	
+	
+	
+	
+	
+	
 	/**
 	 * 
-	 * @return a sorted selected rout
+	 * @return
 	 */
+	
 	ArrayList<Route> getRandomSelection(){
 		
 		ArrayList<Route> selected = new ArrayList<Route>();
@@ -188,6 +226,12 @@ public class GeneticAlgorithmManager {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Get the most fit ~x% of the generation.
 	 * @return elites the most fit in the generation
@@ -205,6 +249,11 @@ public class GeneticAlgorithmManager {
 	}
 	
 	
+	
+	
+	
+	
+	
 	ArrayList<Route> getMids(){
 		
 		ArrayList<Route> mids = new ArrayList<Route>();
@@ -216,7 +265,13 @@ public class GeneticAlgorithmManager {
 		
 	}
 	
-		
+	
+	
+	
+	
+	
+	
+	
 	 public String toString() {
 		 String s = "";
 		 for(Route r : population) {
