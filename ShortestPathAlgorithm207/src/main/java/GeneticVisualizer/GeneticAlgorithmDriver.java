@@ -1,4 +1,4 @@
-package ShortestPathAlgorithm207.ShortestPathAlgorithm207;
+package GeneticVisualizer;
 
 import java.util.Arrays;
 
